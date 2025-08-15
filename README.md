@@ -2,7 +2,7 @@
 
 The goal of this project is to predict house prices using machine learning techniques applied to a small dataset, which may be affected by multicollinearity. This project is somewhat complex because it attempts to predict house prices based on features such as area and various house amenities that influence the prediction.
 
-The project consists of three .py files and one dataset file named Housing.csv, all located in the same directory.
+The project consists of three .py files and one dataset file named Housing.csv, all located in the same directory. The main file is the compute_regression that inherits of others files.
 
 During preprocessing, gradient computation and normalization are performed to ensure the data distribution is symmetric, enabling a more accurate analysis. Normalization is done using the StandardScaler from the sklearn library, which scales the data approximately to a range between -1 and 5, where -1 represents values slightly below the mean and 5 represents values far from the mean.
 
