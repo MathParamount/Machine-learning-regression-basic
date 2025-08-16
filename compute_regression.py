@@ -2,8 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+
+#files import
 from compute_gradient import compute_gradient_descedent
 from compute_normalize import zscore_normalize_feature
+from data_correlation import calcule_conf_int,calcule_pearson
 
 #Data import and tratment
 try:
@@ -15,6 +18,10 @@ try:
   x_train = df[numeric_cols].drop(target_col, axis=1)
   y_train = df[target_col].values  # convert to numpy array
 
+  #data correlations
+  correlation,p_valor = calcule_pearson(x_train,y_train)
+  confid_interv = calcule_conf_int(x_train,y_train)
+ 
   # Implement normalization
   x_train_norm = zscore_normalize_feature(x_train)
   feature_names = x_train.columns
@@ -33,7 +40,6 @@ try:
 
   # Prediction
   y_pred = x_train_norm @ w_final + b_final
-
 
   #Plotting the original data and regression line
   plt.figure(figsize=(12, 5))
@@ -65,6 +71,12 @@ try:
   print(f"First 5 y values: {y_train[:5]}\n")
   print(f"Final weights: {w_final}")
   print(f"Final bias: {b_final}")
+
+  #Correlation visualization
+  print("\n" + "..............................." + "\n")
+  print(f"Correlation measure: {correlation}")
+  print(f"p-valor: {p_valor}")
+  print(f"Confident interval: {confid_interv}")
 
 except Exception as e:
   print(f"An error occurred: {e}")
