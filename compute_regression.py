@@ -2,8 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+
+#files import
 from compute_gradient import compute_gradient_descedent
 from compute_normalize import zscore_normalize_feature
+from data_correlation import calcule_conf_int,calcule_pearson
 
 #Data import and tratment
 try:
@@ -33,7 +36,6 @@ try:
 
   # Prediction
   y_pred = x_train_norm @ w_final + b_final
-
 
   #Plotting the original data and regression line
   plt.figure(figsize=(12, 5))
@@ -66,6 +68,12 @@ try:
   print(f"Final weights: {w_final}")
   print(f"Final bias: {b_final}")
 
+  #Correlation visualization
+  print("\n" + "..............................." + "\n")
+  print(f"Correlation measure: {correlation}")
+  print(f"p-valor: {p_valor}")
+  print(f"Confident interval: {confid_interv}")
+  
 except Exception as e:
   print(f"An error occurred: {e}")
 
