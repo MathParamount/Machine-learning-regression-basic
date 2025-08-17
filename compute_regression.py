@@ -29,7 +29,7 @@ try:
   y_train_norm = zscore_normalize_feature(y_train.reshape(-1,1)).flatten()    #first we transforme a vector 1D(n,) in 2D(n,1) after we reshape to 1D
 
   # Initialize parameters
-  alpha = 0.005        #learning_rate
+  alpha = 0.0005        #learning_rate
   num_iter = 10000
   b = 0
   w = np.zeros(x_train_norm.shape[1])  # initialize the weights for all features
@@ -62,8 +62,8 @@ try:
 
   #Plotting cost function
   plt.subplot(1,2,2)
-  plt.plot(j_descedent, label= "Gradient descendent")
-  plt.plot(j_adam, label = "Adam")
+  plt.plot(j_descedent, color = 'blue',label= "Gradient descendent")
+  plt.plot(j_adam, color = 'green',label = "Adam")
   plt.title("cost history comparitions")
   plt.xlabel("Iteration")
   plt.ylabel("Cost")
@@ -80,6 +80,8 @@ try:
   print(f"First 5 y values: {y_train[:5]}\n")
   print(f"Final weights (Gradient): {w_descedent}")
   print(f"Final bias (Gradient): {b_descendent}")
+  print(f"Final weights (Adam): {w_adam}")
+  print(f"Final bias (Adam): {b_adam}")
 
   #Correlation visualization
   print("\n" + "..............................." + "\n")

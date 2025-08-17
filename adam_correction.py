@@ -40,14 +40,16 @@ def compute_adam(X,y,w,b,learn_rate,num_iter):
 		#Getting dw,db and making a cost history
 		dw , db = compute_gradient_function(X,y,w,b)
 		cost = compute_cost(X,y,w,b)
-		cost_history.append(cost)
 		
+		if i<100000:      # prevent resource exhaustion 
+			cost_history.append(cost)
+				
 		#Exponential moment atualizations
-		m_w = m_w*Beta1*(1-Beta1)*dw
-		v_w = v_w*Beta2*(1-Beta2)*(dw**2)
+		m_w = Beta1*m_w + (1-Beta1)*dw
+		v_w = Beta2*v_w + (1-Beta2)*(dw**2)
 
-		m_b = m_b*Beta1*(1-Beta1)*db
-		v_b = v_b*Beta2*(1-Beta2)*(db**2)
+		m_b = Beta1*m_b + (1-Beta1)*db
+		v_b = Beta2*v_b + (1-Beta2)*(db**2)
 		
 		#Bias correction
 		m_w_correction = m_w/(1-Beta1**step)
@@ -58,6 +60,6 @@ def compute_adam(X,y,w,b,learn_rate,num_iter):
 		
 		#Updating the parameters
 		w = w - learn_rate*(m_w_correction/ (np.sqrt(v_w_correction)+epsilon))
-		b = b - learn_rate*(v_b_correction/ (np.sqrt(v_b_correction)+epsilon))
+		b = b - learn_rate*(m_b_correction/ (np.sqrt(v_b_correction)+epsilon))
 		
 	return w,b,cost_history
