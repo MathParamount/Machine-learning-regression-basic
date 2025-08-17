@@ -14,6 +14,7 @@ Additionally, the program generates graphs showing the trend of the predictions 
 
 Import the CSV file and specify the "price" column as the target variable for prediction.
 Preprocess the data by separating features (X_train) and the target variable (y_train).
+Correlation analyzes between area and price column was a step to get more informations about the data.
 Normalize the features using sklearn’s StandardScaler.
 Initialize the model parameters, which can be adjusted to observe how changes affect the data.
 
