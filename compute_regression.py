@@ -77,7 +77,7 @@ try:
   print(f"Correlation measure: {correlation}")
   print(f"p-valor: {p_valor}")
   print(f"Confident interval: {confid_interv}")
-
+	
 except Exception as e:
   print(f"An error occurred: {e}")
 
