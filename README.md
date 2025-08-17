@@ -18,7 +18,7 @@ Correlation analyzes between area and price column was a step to get more inform
 Normalize the features using sklearn’s StandardScaler.
 Initialize the model parameters, which can be adjusted to observe how changes affect the data.
 
-Compute gradient descent through the following steps:
+Using gradient descent through the following steps:
 1. Calculate the cost (quadratic error function).
 2. Compute the gradient (partial derivatives).
 3. Iteratively update parameters to obtain optimal weights (w), bias (b), and cost history (j_history).
@@ -26,25 +26,44 @@ Compute gradient descent through the following steps:
 5. Plot the original data points and the regression line showing the relationship between area and price.
 6. Plot the cost function values over iterations to analyze model convergence.
 
+Using adam through the following steps:
+1. Calcule the cost(quadratic error function).
+2. Compute the gradient( partial derivatives).
+3. Initialize the moments, step and cost history vector.
+4. Increment the step in each interaction and get dw and db from cost function.
+5. Making gradient exponential mean to w and b. It gives stability to direction avoiding strong oscillations.
+6. quadratic gradient exponential mean to w and b avoiding either large or small steps.
+
+- Visual comparations:
+
+
 - Observations:
 
 This project was created to apply knowledges to something too useful in society.
 The alpha and number of iterations variables can be change to visualize how the model performs their predictions.
 
+We introduced a new file dubbed adam_
+
 - compilation:
 
 the all libraries that was used in this project:
 
-'bash
+'
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+'
+
+The files inherited:
+'
 from compute_gradient import compute_gradient_descedent
 from compute_normalize import zscore_normalize_feature
+from data_correlation import calcule_conf_int,calcule_pearson
 '
 
 the 3 files is in the same directory, thus it doesn't need to specify the path to the compile.
+
 'bash
 python3 compute_regression.py
 '
