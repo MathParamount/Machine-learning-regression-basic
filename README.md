@@ -48,25 +48,25 @@ We introduced a new file dubbed adam_
 
 the all libraries that was used in this project:
 
-'
+```
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-'
+```
 
 The files inherited:
-'
+```
 from compute_gradient import compute_gradient_descedent
 from compute_normalize import zscore_normalize_feature
 from data_correlation import calcule_conf_int,calcule_pearson
-'
+```
 
 the 3 files is in the same directory, thus it doesn't need to specify the path to the compile.
 
-'bash
+```
 python3 compute_regression.py
-'
+```
 
 - Conclusion:
 
