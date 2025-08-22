@@ -13,15 +13,20 @@ def compute_cost(X,y,w,b):
     return cost
 
 #This function return dj_db and dj_dw
-def compute_gradient_function(X, y, w, b):
+def compute_gradient_function_huber_loss(X, y, w, b, delta=1.5):
 
-    m = X.shape[0]
-    error = (np.dot(X, w) + b) - y
-    
-    dj_dw = (1/m) * np.dot(X.T,error)
-    dj_db = (1/m) * np.sum(error)
+	m = len(y)
+	y_pred = X.dot(w) + b
 
-    return dj_dw,dj_db
+	error = y - (np.dot(X,w) + b)
+	abs_error = np.abs(error)
+
+	grad = np.where(abs_error <= delta, -error, -delta * np.sign(error))
+
+	dj_dw = (1 / m) * np.dot(X.T, error)
+	dj_db = (1 / m) * np.sum(error)
+
+	return dj_dw, dj_db
 
 def compute_adam(X,y,w,b,learn_rate,num_iter):
 	#initializations
@@ -38,7 +43,7 @@ def compute_adam(X,y,w,b,learn_rate,num_iter):
 		step += 1
 		
 		#Getting dw,db and making a cost history
-		dw , db = compute_gradient_function(X,y,w,b)
+		dw , db = compute_gradient_function_huber_loss(X,y,w,b)
 		cost = compute_cost(X,y,w,b)
 		
 		if i<100000:      # prevent resource exhaustion 
