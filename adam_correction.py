@@ -2,18 +2,24 @@ import numpy as np
 import copy, math
 import matplotlib.pyplot as plt
 
-def compute_cost(X,y,w,b):
+def compute_huber_cost(X,y,w,b,delta = 1.0):
     
-    m = X.shape[0]
-    
-    prediction = np.dot(X, w) + b      #matrix multiplication
+	m = len(X)
+	y_pred = X.dot(w) + b
+	error = y - y_pred
 
-    cost =  (1/(2*m))*np.sum(prediction-y)**2
-    
-    return cost
+	cost = 0.0
+
+	for e in error:
+		if abs(e) <= delta:
+			cost += 0.5*(e**2)
+		else:
+			cost += delta * (abs(e) - 0.5*delta)
+	
+	return cost/m
 
 #This function return dj_db and dj_dw
-def compute_gradient_function_huber_loss(X, y, w, b, delta=1.5):
+def compute_gradient_function_huber_loss(X, y, w, b, delta=1.0):
 
 	m = len(y)
 	y_pred = X.dot(w) + b
@@ -23,12 +29,12 @@ def compute_gradient_function_huber_loss(X, y, w, b, delta=1.5):
 
 	grad = np.where(abs_error <= delta, -error, -delta * np.sign(error))
 
-	dj_dw = (1 / m) * np.dot(X.T, error)
-	dj_db = (1 / m) * np.sum(error)
+	dj_dw = (1 / m) * np.dot(X.T, grad)
+	dj_db = (1 / m) * np.sum(grad)
 
 	return dj_dw, dj_db
 
-def compute_adam(X,y,w,b,learn_rate,num_iter):
+def compute_adam(X,y,w,b,learn_rate,num_iter,delta=1.0):
 	#initializations
 	m_w,m_b = 0, 0
 	v_w,v_b = 0, 0
@@ -38,16 +44,15 @@ def compute_adam(X,y,w,b,learn_rate,num_iter):
 	epsilon = 1e-8		#Adjust to avoid zero division
 	Beta1 = 0.9			#Smooths the gradients
 	Beta2 = 0.999		#Smooths the quadratic gradient
-	
+
 	for i in range(num_iter):
 		step += 1
 		
 		#Getting dw,db and making a cost history
-		dw , db = compute_gradient_function_huber_loss(X,y,w,b)
-		cost = compute_cost(X,y,w,b)
+		dw , db = compute_gradient_function_huber_loss(X,y,w,b,delta)
+		cost = compute_huber_cost(X,y,w,b,delta)
 		
-		if i<100000:      # prevent resource exhaustion 
-			cost_history.append(cost)
+		cost_history.append(cost)
 				
 		#Exponential moment atualizations
 		m_w = Beta1*m_w + (1-Beta1)*dw

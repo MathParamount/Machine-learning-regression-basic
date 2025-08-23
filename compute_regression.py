@@ -29,31 +29,32 @@ try:
   y_train_norm = zscore_normalize_feature(y_train.reshape(-1,1)).flatten()    #first we transforme a vector 1D(n,) in 2D(n,1) after we reshape to 1D
 
   # Initialize parameters
-  alpha = 0.005        #learning_rate
-  num_iter = 10000
-  b = 0
+  alpha = 0.003        #learning_rate
+  num_iter = 5000
+  b = 0           #initial bias
   w = np.zeros(x_train_norm.shape[1])  # initialize the weights for all features
+  delta = 1.0     #turning point between quadratic and linear fuction
 
   # Run gradient descent
   print("Starting gradient descent...")
   w_descedent, b_descendent, j_descedent = compute_gradient_descedent(
-        x_train_norm, y_train_norm, w, b, alpha, num_iter
+        x_train_norm, y_train_norm, w, b, alpha, num_iter,delta
     )
 
   # Run the adam method
   print("Starting adam...")
   w_adam, b_adam, j_adam = compute_adam(
-    x_train_norm,y_train_norm,w,b,alpha,num_iter
+    x_train_norm,y_train_norm,w,b,alpha,num_iter,delta
     )
 
   # Prediction with gradient descendent
   y_pred = x_train_norm @ w_descedent + b_descendent
 
   #Plotting the original data and regression line
-  plt.figure(figsize=(12, 5))
+  plt.figure(figsize=(30, 10))
   plt.subplot(1, 2, 1)
-  plt.scatter(x_train_norm[:, 0], y_train_norm, marker='x', c='r', label="Actual Value")
-  plt.scatter(x_train_norm[:, 0], y_pred, color='blue', label="Predicted Value", alpha=0.5)
+  plt.scatter(x_train_norm[:, 0], y_pred, color='blue', label="Predicted Value", s = 20,zorder = 2)
+  plt.scatter(x_train_norm[:, 0], y_train_norm, marker='x', c='r', label="Actual Value",s = 30,zorder = 3)
   plt.title(f"Feature vs price (first feature: {feature_names[0]})")
   plt.xlabel("Normalized " + feature_names[0])
   plt.ylabel("price")
