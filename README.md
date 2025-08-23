@@ -60,9 +60,24 @@ The files inherited:
 from compute_gradient import compute_gradient_descedent
 from compute_normalize import zscore_normalize_feature
 from data_correlation import calcule_conf_int,calcule_pearson
+from adam_correction import compute_adam
 ```
 
-the 3 files is in the same directory, thus it doesn't need to specify the path to the compile.
+In the adam_correlation file:
+```
+import numpy as np
+from scipy.stats import t
+from scipy.stats import pearsonr
+```
+
+In compute_gradient file:
+```
+import numpy as np
+import copy, math
+import matplotlib.pyplot as plt
+```
+
+the files is in the same directory, thus it doesn't need to specify the path to the compile.
 
 ```
 python3 compute_regression.py
